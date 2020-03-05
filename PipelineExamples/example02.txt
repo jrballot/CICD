@@ -1,0 +1,64 @@
+ 
+pipeline {
+    
+    agent any
+    
+    environment {
+        var = "Essa é a Campus Party 2019!!!!"
+    }
+
+
+    stages {
+        
+        stage("Compilação") {
+            steps{
+                sh "echo Oi"
+            }
+        }
+        stage("Paralelo") {
+            
+            parallel {
+                stage("Teste em Paralelo 01") {
+                    steps{
+                        echo "Paralelo 01"
+                
+                    }
+                }
+                
+                stage("Teste em Paralelo 03") {
+                    steps {
+                        echo "Paralelo 03"
+                    }
+                }
+                
+                stage("Teste em Paralelo 03") {
+                    steps {
+                        echo "Paralelo 03"
+                    }
+                }
+            }
+        } 
+        
+        stage("Variaveis"){
+            steps {
+                sh "echo ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                sh "echo ${env.VAR}"
+            }
+        }
+       
+    }    
+     post{
+            always {
+                sh "echo Report Not Ready"
+                mail to: "cursoci@localhost", subject: "Pipeline Finalizada", body:"Finalizada na build ${env.BUILD_ID}"
+            }
+            success{
+                echo "Pipeline Finalizada"
+                mail to: "julio.ballot@4linux.com.br", subject: "Pipeline Concluida com Sucesso", body:"Tudo certo na build ${env.BUILD_ID}"
+            }
+            failure {
+                mail to: "julio.ballot@4linux.com.br", subject: "Pipeline Concluida com Falha", body:"Algo de errado na build ${env.BUILD_ID}"
+            }
+        }
+    
+}

@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven "maven361"
+    }
+
+    stages {
+        stage("COMPILACAO") {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+        stage("ANALISE DE QUALIDADE") {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh "mvn sonar:sonar -Dsonar.projectVersions=${BUILD_ID} -Dsonar.projectKey=\"hw-sonar\" -DskipTests"
+                }
+            }
+        }
+        stage("RESULTADO DA ANÁLISE") {
+            steps {
+                timeout(time: 1, unit: "MINUTES") {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        stage("SALVANDO ARTEFATO") {
+            steps {
+                 script{
+                    def pom = readMavenPom file: 'pom.xml'
+
+                    nexusPublisher nexusInstanceId: 'nexus3', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: env.WORKSPACE+'/target/helloworld.war']], mavenCoordinate: [artifactId: "${pom.artifactId}", groupId: "${pom.groupId}", packaging: "${pom.packaging}", version: "${pom.version}"]]]
+                }
+            }
+        }
+        stage("DEPLOY PRODUCAO") {
+            steps {
+                sh "mvn wildfly:deploy"
+            }
+        }
+    }
+}
+ 

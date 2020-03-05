@@ -1,0 +1,36 @@
+pipeline {
+    
+    agent any
+    
+    environment{
+        GIT_REPO='git@192.168.88.10:root/cicd.git'
+    }
+    
+    stages {
+        
+        stage("Checkout repository"){
+            steps{
+                cleanWs()
+                sh 'env'
+                sh 'mkdir -p $WORKSPACE/repo'
+                
+                dir("${WORKSPACE}/repo"){
+                    sshagent(['4c5ac634-725b-4623-95ef-cc91c5a0f21f']){
+                        sh('git clone ${GIT_REPO} .')
+                    }
+                    sh 'git branch'
+                    sh 'git remote -v'
+                }
+            }
+        }
+        
+        stage("Clean Up") {
+            
+            steps {
+                cleanWs()
+            }
+        }
+        
+    }
+    
+} 

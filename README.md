@@ -58,6 +58,12 @@ Instalando Jenkins
 # systemctl start jenkins
 ```
 
+Instalando maquina Jenkins-node
+
+# yum install -y epel-release
+# yum install git java-1.8.0-openjdk -y
+
+
 ### Instalando Docker na maquina pipeline
 
 ```sh

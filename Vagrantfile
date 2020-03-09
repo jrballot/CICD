@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Stash test
+
 machines = {
 	"scm" => {"memory"=>"4096", "cpus"=>"1", "ip" => "10" },
 	"pipeline" => {"memory"=>"4096", "cpus"=>"1", "ip" => "20" },

@@ -11,8 +11,8 @@ vagrant up scm --provision
 Instalando Gitlab-CE
 
 ```sh
-[root@scm ~]# curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
-[root@scm ~]# yum install -y gitlab-ce
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+yum install -y gitlab-ce
 ```
 
 ### Configurando Gitlab-CE
@@ -51,8 +51,8 @@ $ vagrant up pipeline --provision
 Instalando Jenkins
 
 ```sh
-# curl http://pkg.jenkins-ci.org/redhat/jenkins.repo -o /etc/yum.repos.d/jenkins.repo
-# rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+# curl http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo -o /etc/yum.repos.d/jenkins.repo
+# rpm --import https://jenkins-ci.org/redhat-stable/jenkins.io.key
 # yum install jenkins git java-1.8.0-openjdk -y
 # systemctl enable jenkins
 # systemctl start jenkins

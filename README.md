@@ -51,38 +51,38 @@ $ vagrant up pipeline --provision
 Instalando Jenkins
 
 ```sh
-# curl http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo -o /etc/yum.repos.d/jenkins.repo
-# rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-# yum install jenkins git java-1.8.0-openjdk -y
-# systemctl enable jenkins
-# systemctl start jenkins
+curl http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo -o /etc/yum.repos.d/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins git java-1.8.0-openjdk -y
+systemctl enable jenkins
+systemctl start jenkins
 ```
 
 Instalando maquina Jenkins-node
 
 ```
-# yum install -y epel-release
-# yum install git java-1.8.0-openjdk -y
+yum install -y epel-release
+yum install git java-1.8.0-openjdk -y
 ```
 
 ### Instalando Docker na maquina pipeline
 
 ```sh
-# yum install -y yum-utils device-mapper-persistent-data lvm2
-# yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-# yum install -y docker-ce docker-ce-cli containerd.io
-# systemctl enable docker
-# systemctl start docker
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce docker-ce-cli containerd.io
+systemctl enable docker
+systemctl start docker
 ```
 
 ### Rodando SonarQube no Docker
 
 ```sh
-# docker run -dti --name sonarqube --restart always -p 9000:9000 sonarqube
+docker run -dti --name sonarqube --restart always -p 9000:9000 sonarqube
 ``` 
 
 ### Rodando SonatypeNexus OSS no Docker
 
 ```sh
-# docker run -dti --name nexus --restart always -p 8081:8081 sonatype/nexus3
+docker run -dti --name nexus --restart always -p 8081:8081 sonatype/nexus3
 ``` 
